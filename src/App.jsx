@@ -10,12 +10,21 @@ import Register from './pages/Register'
 import Resume from './pages/Resume'
 import ResumeBuilder from './pages/ResumeBuilder'
 
+import Navigation from "./components/Navigation";
+
+import { useLocation  } from "react-router-dom"
 
 function App() {
 
+  const location  = useLocation()
+
+  console.log(location.pathname)
+
   return (
     <>
+    {location.pathname === '/' || location.pathname ==='/register' ? '' : <Navigation />}
     <ToastContainer />
+    
     <Routes>
       <Route path='/' element={<Login />}/>
       <Route path='/register' element={<Register />}/>

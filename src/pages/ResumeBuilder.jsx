@@ -82,7 +82,7 @@ const ResumeBuilder = () => {
    
 
   return (
-    <section className="w-full bg-gray-200 min-h-screen py-5">
+    <section className="w-full bg-gray-200 min-h-screen pt-[90px]">
 
         <h2 className="text-2xl md:text-4xl text-center font-bold text-[#002D74] mb-4">Create online resume</h2>
         

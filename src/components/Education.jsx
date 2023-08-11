@@ -56,8 +56,6 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
       })
     }
 
-    
-
   return (
     <>
           {
