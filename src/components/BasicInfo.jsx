@@ -22,6 +22,7 @@ const BasicInfo = ({nextPage, formData, setFormData}) => {
                 let data = {
                     'first_name':formData.first_name, 
                     'last_name': formData.last_name, 
+                    'title': formData.title,
                     'email': formData.email,
                     'telephone': formData.telephone,
                     'career_summary': formData.career_summary,

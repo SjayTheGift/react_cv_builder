@@ -46,7 +46,7 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
             // validation check if number of fields returned are equal to number of fields we are looping
             // if it passes go to next page and save the data on localStorage
             nextPage()
-            localStorage.setItem('education', JSON.stringify(educationForm))
+            localStorage.setItem('Education', JSON.stringify(educationForm))
           }
               
         }else{
@@ -71,7 +71,7 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
                         <input 
                             type="text" 
                             name="course_name" 
-                            placeholder="Enter Job Title" 
+                            placeholder="Enter Course Name" 
                             className={`w-full px-4 py-3 rounded-lg 
                               bg-gray-200 mt-2 border focus:border-blue-500 
                               focus:bg-white focus:outline-none ${submitted && !course_name ? 'border border-red-600' : ''}`}   

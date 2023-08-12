@@ -19,6 +19,7 @@ const Skills = ({skillInput, setSkillInput, prevPage}) => {
     }else{
       const newList = skills.concat(skillInput);
       setSkills(newList)
+      localStorage.setItem('Skills', JSON.stringify(newList))
       setSkillInput('')
       setSubmitted(false)
     }
