@@ -35,9 +35,6 @@ Experience
 Education
 ![picture alt](https://github.com/SjayTheGift/react_cv_builder/blob/main/public/img/education_screen.png "Education")
 
-Employee Form Screen
-![picture alt](https://github.com/SjayTheGift/React_Dashboard/blob/main/public/HR%20System%20images/Employee_Form_Screen.png "Employee Form Screen")
-
 Skills
 ![picture alt](https://github.com/SjayTheGift/react_cv_builder/blob/main/public/img/Skills_screen.png "Skills")
 
