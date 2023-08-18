@@ -5,9 +5,20 @@ import BasicInfo from '../components/BasicInfo'
 import Experience from '../components/Experience'
 import Education from '../components/Education'
 import Skills from '../components/Skills'
+import { decodeToken  } from "react-jwt";
+
+import { useSelector } from 'react-redux'
+
 
 const ResumeBuilder = () => {
     const [page, setPage] = useState(0)
+    const { userToken } = useSelector((state) => state.auth)
+    const token = JSON.parse(userToken)
+    const user_id = decodeToken(token.access)['user_id']
+    const resume_id = decodeToken(token.access)['resume']
+
+    console.log(user_id)
+
     const pageTitle = [
         'Basic Info',
         'Experience',
@@ -15,7 +26,7 @@ const ResumeBuilder = () => {
         'Skills',
     ]
 
-    const [formData, setFormData] = useState([{
+    const [formData, setFormData] = useState({
         first_name:'',
         last_name:'',
         email: '',
@@ -25,14 +36,16 @@ const ResumeBuilder = () => {
         linkedin: '',
         github: '',
         website: '',
-    }])
+        user: user_id,
+    })
 
     const [experienceForm, setExperienceForm] = useState([{
         position: '',
         company: '',
         start_date: '',
         end_date: '',
-        summary: ''
+        summary: '',
+        resume: resume_id,
     }])
 
     const [educationForm, setEducationForm] = useState([{
@@ -71,7 +84,7 @@ const ResumeBuilder = () => {
                 return <Education nextPage={nextPage} prevPage={prevPage} educationForm={educationForm} setEducationForm={setEducationForm}/>;
             break;
             case 3:
-                return <Skills skillInput={skillInput} setSkillInput={setSkillInput} prevPage={prevPage}/>;
+                return <Skills experienceForm={experienceForm} formData={formData} skillInput={skillInput} setSkillInput={setSkillInput} prevPage={prevPage}/>;
             break;
             // case 4:
             //     return <Achievements />;

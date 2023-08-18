@@ -1,9 +1,11 @@
 import {useState} from 'react'
 
 const BasicInfo = ({nextPage, formData, setFormData}) => {
-    const {first_name, last_name, email, telephone, title, career_summary, linkedin, github, website} = formData
+    const {first_name, last_name, email, telephone, title, career_summary, linkedin, github, website, user_id} = formData
 
     const [submitted, setSubmitted] = useState(false);
+
+    
 
     const onInputChange = (e) => {
         setFormData((prevState) => ({
@@ -29,6 +31,7 @@ const BasicInfo = ({nextPage, formData, setFormData}) => {
                     'linkedin': formData.linkedin === undefined ? '' : formData.linkedin,
                     'github': formData.github === undefined ?  '' : formData.github,
                     'website': formData.website === undefined ? '' : formData.website,
+                    'user': formData.user_id,
                 }
                console.log(data)
                nextPage()

@@ -5,6 +5,7 @@ const Experience = ({nextPage, prevPage, experienceForm, setExperienceForm}) => 
   const [submitted, setSubmitted] = useState(false);
   const [otherError, setOtherError] = useState(false);
 
+
       const removeInputFields = (index)=>{
         // removes fields based on the index return form the state experienceForm
 
@@ -21,7 +22,7 @@ const Experience = ({nextPage, prevPage, experienceForm, setExperienceForm}) => 
           company: '',
           start_date: '',
           end_date: '',
-          summary: ''
+          summary: '',
         }])
 
       }
