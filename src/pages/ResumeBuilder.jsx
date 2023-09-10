@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{ useState, useEffect} from 'react'
 import ProgressSteps from '../components/ProgressSteps'
 import NextAndPrev from '../components/NextAndPrev'
 import BasicInfo from '../components/BasicInfo'
@@ -7,17 +7,16 @@ import Education from '../components/Education'
 import Skills from '../components/Skills'
 import { decodeToken  } from "react-jwt";
 
-import { useSelector } from 'react-redux'
-
+import { fetchPersonalInfo } from '../features/builder/builderActions';
+import { fetchExperience, fetchEducation } from '../features/otherInfo/otherInfoBuilderActions';
+import { useDispatch, useSelector } from 'react-redux'
 
 const ResumeBuilder = () => {
     const [page, setPage] = useState(0)
     const { userToken } = useSelector((state) => state.auth)
     const token = JSON.parse(userToken)
-    const user_id = decodeToken(token.access)['user_id']
+    // const user_id = decodeToken(token.access)['user_id']
     const resume_id = decodeToken(token.access)['resume']
-
-    console.log(user_id)
 
     const pageTitle = [
         'Basic Info',
@@ -26,37 +25,80 @@ const ResumeBuilder = () => {
         'Skills',
     ]
 
+    
+    const dispatch = useDispatch()
+
     const [formData, setFormData] = useState({
-        first_name:'',
-        last_name:'',
+        id: '',
+        first_name:'', 
+        last_name: '', 
+        title: '',
         email: '',
         telephone: '',
-        title: '',
         career_summary: '',
         linkedin: '',
         github: '',
         website: '',
-        user: user_id,
+        user: '',
     })
 
+    const { personalInfoData, isSuccessPersonalInfo } = useSelector((state) => state.builder)
+    const { experienceData, educationData, isEducationSuccess, isExperienceSuccess } = useSelector((state) => state.otherInfoBuilder)
+  
+
     const [experienceForm, setExperienceForm] = useState([{
+        id: '',
         position: '',
         company: '',
         start_date: '',
         end_date: '',
         summary: '',
-        resume: resume_id,
+        resume: '',
     }])
 
     const [educationForm, setEducationForm] = useState([{
-        course_name: '',
+        // id: '',
+        title: '',
         institution: '',
         duration: '',
+        resume: resume_id,
     }])
 
     const [skillInput, setSkillInput] = useState()
-  
 
+
+  
+  useEffect(() =>{
+    dispatch(fetchPersonalInfo())
+
+    dispatch(fetchExperience())
+
+    dispatch(fetchEducation())
+
+    if(isSuccessPersonalInfo){
+        setFormData(JSON.parse(personalInfoData)[0])
+    }
+
+    if(isExperienceSuccess && experienceData != null){
+        setExperienceForm(JSON.parse(experienceData))
+    }
+
+    if(isEducationSuccess && educationData != null){
+        setExperienceForm(JSON.parse(educationData))
+    }
+    
+
+  },[personalInfoData, experienceData, educationData, isExperienceSuccess, isEducationSuccess, isSuccessPersonalInfo])
+
+
+//   if(!experienceData){
+//     setExperienceForm(JSON.parse(experienceData))
+//    }
+
+    
+    // const personalData = JSON.parse(localStorage.getItem('personalInfoData'));
+    
+    console.log('test', resume_id)
     
     const nextPage = () => {
         setPage((currentPage) => currentPage + 1) 
@@ -84,7 +126,7 @@ const ResumeBuilder = () => {
                 return <Education nextPage={nextPage} prevPage={prevPage} educationForm={educationForm} setEducationForm={setEducationForm}/>;
             break;
             case 3:
-                return <Skills experienceForm={experienceForm} formData={formData} skillInput={skillInput} setSkillInput={setSkillInput} prevPage={prevPage}/>;
+                return <Skills educationForm={educationForm} experienceForm={experienceForm} formData={formData} skillInput={skillInput} setSkillInput={setSkillInput} prevPage={prevPage}/>;
             break;
             // case 4:
             //     return <Achievements />;

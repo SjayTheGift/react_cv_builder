@@ -1,18 +1,19 @@
 import {useState, useEffect} from 'react'
-import { useLocation, useNavigate, Navigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { decodeToken  } from "react-jwt";
 
-import { addPersonalInfo } from '../features/builder/builderActions';
-import { addExperience } from '../features/otherInfo/otherInfoBuilderActions'
+import { updatePersonalInfo } from '../features/builder/builderActions';
+import { addExperience, updateExperience, addEducation, updateEducation } from '../features/otherInfo/otherInfoBuilderActions'
 
 
-const Skills = ({experienceForm, formData, skillInput, setSkillInput, prevPage}) => {
+const Skills = ({experienceForm, educationForm, formData, skillInput, setSkillInput, prevPage}) => {
   const [submitted, setSubmitted] = useState(false);
 
   const [skills, setSkills] = useState([])
 
   const { isSuccessPersonalInfo } = useSelector((state) => state.builder)
+
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -20,10 +21,6 @@ const Skills = ({experienceForm, formData, skillInput, setSkillInput, prevPage})
   const onInputChange = (e) => {
     setSkillInput(e.target.value)
   }
-
-
-
-
 
   const onAddSkill = (e) => {
     e.preventDefault()
@@ -52,11 +49,33 @@ const Skills = ({experienceForm, formData, skillInput, setSkillInput, prevPage})
   const onSubmit = (e) => {
     e.preventDefault()
     
-    dispatch(addPersonalInfo(formData))
+    dispatch(updatePersonalInfo(formData))
+
     
-    // if(isSuccessPersonalInfo){
-    //   dispatch(addExperience(experienceForm))
-    // }
+    if(isSuccessPersonalInfo){
+
+      experienceForm.map((form)=>{
+        if(form.id){
+          dispatch(updateExperience(form))
+        }else{
+          dispatch(addExperience(form))
+        }
+      })
+
+      educationForm.map((form)=>{
+        if(form.id){
+          dispatch(updateEducation(form))
+        }else{
+          dispatch(addEducation(form))
+        }
+      })
+
+      // experienceForm.map((form)=>{
+      //   dispatch(addExperience(form))
+      // })
+
+      
+    }
 
     navigate('/resume')
   }

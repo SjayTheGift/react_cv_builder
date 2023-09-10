@@ -30,7 +30,6 @@ export const builderSlice = createSlice({
     reset: (state) => {
       state.personalInfoData = state.personalInfoData
       state.isLoading = false
-      state.isSuccess = false,
       state.isSuccessPersonalInfo = false,
       state.isError = false
       state.message = ''
@@ -44,9 +43,8 @@ export const builderSlice = createSlice({
       })
       .addCase(fetchPersonalInfo.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true;
-        // state.departmentData = localStorage.getItem('departmentData');
-        state.departmentData = action.payload
+        state.isSuccessPersonalInfo = true;
+        state.personalInfoData = localStorage.getItem('personalInfoData');
       })
       .addCase(fetchPersonalInfo.rejected, (state, action) => {
         state.isLoading = false;
@@ -72,7 +70,7 @@ export const builderSlice = createSlice({
       })
       .addCase(updatePersonalInfo.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.updatedSuccess = true;
+        state.isSuccessPersonalInfo = true;
       })
       .addCase(updatePersonalInfo.rejected, (state, action) => {
         state.isLoading = false;

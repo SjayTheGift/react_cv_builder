@@ -1,9 +1,15 @@
 import {useState} from 'react'
 import { toast  } from 'react-toastify';
+import { useSelector } from 'react-redux'
+import { decodeToken  } from "react-jwt";
 
 const Experience = ({nextPage, prevPage, experienceForm, setExperienceForm}) => {
   const [submitted, setSubmitted] = useState(false);
   const [otherError, setOtherError] = useState(false);
+  const { userToken } = useSelector((state) => state.auth)
+  const token = JSON.parse(userToken)
+  const resume_id = decodeToken(token.access)['resume']
+
 
 
       const removeInputFields = (index)=>{
@@ -14,6 +20,8 @@ const Experience = ({nextPage, prevPage, experienceForm, setExperienceForm}) => 
         setExperienceForm(rows);
       }
 
+      
+
       const addInputField = (e) =>{
         // add fields into state experienceForm
         e.preventDefault()
@@ -23,6 +31,7 @@ const Experience = ({nextPage, prevPage, experienceForm, setExperienceForm}) => 
           start_date: '',
           end_date: '',
           summary: '',
+          resume: resume_id,
         }])
 
       }
@@ -32,6 +41,9 @@ const Experience = ({nextPage, prevPage, experienceForm, setExperienceForm}) => 
         const { name, value } = e.target;
         const list = [...experienceForm];
         list[index][name] = value;
+
+        console.log(list)
+
         setExperienceForm(list);
 
     }
