@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react'
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
 import "primereact/resources/primereact.min.css"; 
 import 'primeicons/primeicons.css';
@@ -9,6 +10,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Resume from './pages/Resume'
 import ResumeBuilder from './pages/ResumeBuilder'
+import { PrivateRoute } from '../src/utils/PrivateRoute'
 
 import Navigation from "./components/Navigation";
 
@@ -18,8 +20,6 @@ function App() {
 
   const location  = useLocation()
 
-  console.log(location.pathname)
-
   return (
     <>
     {location.pathname === '/' || location.pathname ==='/register' ? '' : <Navigation />}
@@ -28,8 +28,11 @@ function App() {
     <Routes>
       <Route path='/' element={<Login />}/>
       <Route path='/register' element={<Register />}/>
-      <Route path='/register' element={<Register />}/>
-      <Route path='/resume-builder' element={<ResumeBuilder />}/>
+      <Route path='/resume-builder' element={
+        <PrivateRoute>
+          <ResumeBuilder />
+        </PrivateRoute>
+      }/>
       <Route path='/resume' element={<Resume />}/>
       
     </Routes>

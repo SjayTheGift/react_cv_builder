@@ -1,8 +1,13 @@
 import {useState} from 'react'
+import { useSelector } from 'react-redux'
+import { decodeToken  } from "react-jwt";
 
 const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
       const [submitted, setSubmitted] = useState(false);
-
+      const { userToken } = useSelector((state) => state.auth)
+      const token = JSON.parse(userToken)
+      const resume_id = decodeToken(token.access)['resume']
+      
       const removeInputFields = (index)=>{
         // removes fields based on the index return form the state experienceForm
 
@@ -15,9 +20,10 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
          // add fields into state experienceForm
         e.preventDefault()
         setEducationForm([...educationForm, {
-          course_name: '',
+          title: '',
           duration: '',
           institution: '',
+          resume: resume_id,
         }])
 
       }
@@ -38,7 +44,7 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
 
 
       educationForm.map((form, index) => {
-        if(form.course_name && form.institution  && form.duration ){
+        if(form.title && form.institution  && form.duration ){
           // validation check if all fields above are not empty
           let count  = index + 1
               
@@ -60,7 +66,7 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
     <>
           {
             educationForm.map((data, index)=>{
-              const {course_name, duration, institution}= data;
+              const {title, duration, institution}= data;
               // setExperienceForm(data)
               
               return(
@@ -70,15 +76,15 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
                         <label className="block text-gray-700">Course Name</label>
                         <input 
                             type="text" 
-                            name="course_name" 
+                            name="title" 
                             placeholder="Enter Course Name" 
                             className={`w-full px-4 py-3 rounded-lg 
                               bg-gray-200 mt-2 border focus:border-blue-500 
-                              focus:bg-white focus:outline-none ${submitted && !course_name ? 'border border-red-600' : ''}`}   
-                            value={course_name}
+                              focus:bg-white focus:outline-none ${submitted && !title ? 'border border-red-600' : ''}`}   
+                            value={title}
                            onChange={(e) => onInputChange(index, e)} 
                         />
-                        {submitted && !course_name && <small className="p-error">Field is required.</small>}
+                        {submitted && !title && <small className="p-error">Field is required.</small>}
                     </div>
 
                     <div className="w-full">
