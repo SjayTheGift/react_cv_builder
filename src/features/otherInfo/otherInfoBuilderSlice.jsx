@@ -6,6 +6,9 @@ import {
     fetchEducation,
     addEducation, 
     updateEducation, 
+    fetchSkill,
+    addSkill, 
+    updateSkill, 
 } from './otherInfoBuilderActions'
 
 // const departmentData = localStorage.getItem('departmentData')
@@ -20,6 +23,7 @@ import {
 const initialState = {
   experienceData: [],
   educationData: [],
+  skillsData:[],
   isError: false,
   isExperienceSuccess: false,
   isLoading: false,
@@ -34,9 +38,11 @@ export const otherInfoBuilderSlice = createSlice({
     reset: (state) => {
       state.experienceData = state.experienceData
       state.educationData = state.educationData
+      state.skillsData = state.skillsData
       state.isLoading = false
       state.isExperienceSuccess = false,
       state.isEducationSuccess = false,
+      state.isSkillSuccess = false,
       state.isError = false
       state.message = ''
     },
@@ -120,6 +126,46 @@ export const otherInfoBuilderSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
+      // End Education
+
+      // .addCase(fetchSkill.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(fetchSkill.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isEducationSuccess = true;
+      //   state.educationData = localStorage.getItem('skillsData')
+      // })
+      // .addCase(fetchSkill.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   state.message = action.payload;
+      // })
+      // .addCase(addSkill.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(addSkill.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isEducationSuccess = true;
+      // })
+      // .addCase(addSkill.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   state.message = action.payload;
+      // })
+      
+      // .addCase(updateSkill.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(updateSkill.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isEducationSuccess = true;
+      // })
+      // .addCase(updateSkill.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   state.message = action.payload;
+      // })
   },
 })
 

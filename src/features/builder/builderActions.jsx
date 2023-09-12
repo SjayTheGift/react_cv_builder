@@ -63,7 +63,7 @@ export const updatePersonalInfo = createAsyncThunk('builder/updatePersonalInfo',
   
     return await axios.put(`${backendURL}/api/cv-builder/personal-info/${data.id}/`,  data , config)
     .then(res => {
-        toast.success(res.data.name + ' Updated')
+        toast.success('Updated successfully')
         return res.data
     })
     .catch(error => {

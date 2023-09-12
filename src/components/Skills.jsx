@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { decodeToken  } from "react-jwt";
 
 import { updatePersonalInfo } from '../features/builder/builderActions';
-import { addExperience, updateExperience, addEducation, updateEducation } from '../features/otherInfo/otherInfoBuilderActions'
+import { addExperience, updateExperience, addEducation, updateEducation, addSkill } from '../features/otherInfo/otherInfoBuilderActions'
 
 
 const Skills = ({experienceForm, educationForm, formData, skillInput, setSkillInput, prevPage}) => {
@@ -69,6 +69,12 @@ const Skills = ({experienceForm, educationForm, formData, skillInput, setSkillIn
           dispatch(addEducation(form))
         }
       })
+
+      skills.map((skill => {
+        dispatch(addSkill(skill))
+      }))
+
+      
 
       // experienceForm.map((form)=>{
       //   dispatch(addExperience(form))

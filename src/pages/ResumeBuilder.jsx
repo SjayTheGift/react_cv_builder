@@ -43,7 +43,7 @@ const ResumeBuilder = () => {
     })
 
     const { personalInfoData, isSuccessPersonalInfo } = useSelector((state) => state.builder)
-    const { experienceData, educationData, isEducationSuccess, isExperienceSuccess } = useSelector((state) => state.otherInfoBuilder)
+    const { experienceData, educationData, isEducationSuccess, isExperienceSuccess, } = useSelector((state) => state.otherInfoBuilder)
   
 
     const [experienceForm, setExperienceForm] = useState([{
@@ -57,7 +57,7 @@ const ResumeBuilder = () => {
     }])
 
     const [educationForm, setEducationForm] = useState([{
-        // id: '',
+        id: '',
         title: '',
         institution: '',
         duration: '',
@@ -74,6 +74,8 @@ const ResumeBuilder = () => {
     dispatch(fetchExperience())
 
     dispatch(fetchEducation())
+    
+    // dispatch(fetchSkill())
 
     if(isSuccessPersonalInfo){
         setFormData(JSON.parse(personalInfoData)[0])
@@ -84,11 +86,15 @@ const ResumeBuilder = () => {
     }
 
     if(isEducationSuccess && educationData != null){
-        setExperienceForm(JSON.parse(educationData))
+        setEducationForm(JSON.parse(educationData))
     }
+
+    // if(isSkillSuccess && skillData != null){
+    //     setSkillInput(JSON.parse(skillData))
+    // }
     
 
-  },[personalInfoData, experienceData, educationData, isExperienceSuccess, isEducationSuccess, isSuccessPersonalInfo])
+  },[personalInfoData, experienceData, educationData, skillData, isExperienceSuccess, isEducationSuccess, isSuccessPersonalInfo])
 
 
 //   if(!experienceData){
