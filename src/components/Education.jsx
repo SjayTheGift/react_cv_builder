@@ -20,7 +20,7 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
          // add fields into state experienceForm
         e.preventDefault()
         setEducationForm([...educationForm, {
-          title: '',
+          course: '',
           duration: '',
           institution: '',
           resume: resume_id,
@@ -44,7 +44,7 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
 
 
       educationForm.map((form, index) => {
-        if(form.title && form.institution  && form.duration ){
+        if(form.course && form.institution  && form.duration ){
           // validation check if all fields above are not empty
           let count  = index + 1
               
@@ -66,7 +66,7 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
     <>
           {
             educationForm.map((data, index)=>{
-              const {title, duration, institution}= data;
+              const {course, duration, institution}= data;
               // setExperienceForm(data)
               
               return(
@@ -76,15 +76,15 @@ const Education = ({nextPage, prevPage, educationForm, setEducationForm}) => {
                         <label className="block text-gray-700">Course Name</label>
                         <input 
                             type="text" 
-                            name="title" 
+                            name="course" 
                             placeholder="Enter Course Name" 
                             className={`w-full px-4 py-3 rounded-lg 
                               bg-gray-200 mt-2 border focus:border-blue-500 
-                              focus:bg-white focus:outline-none ${submitted && !title ? 'border border-red-600' : ''}`}   
-                            value={title}
+                              focus:bg-white focus:outline-none ${submitted && !course ? 'border border-red-600' : ''}`}   
+                            value={course}
                            onChange={(e) => onInputChange(index, e)} 
                         />
-                        {submitted && !title && <small className="p-error">Field is required.</small>}
+                        {submitted && !course && <small className="p-error">Field is required.</small>}
                     </div>
 
                     <div className="w-full">

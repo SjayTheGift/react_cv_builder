@@ -3,16 +3,18 @@ import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { decodeToken  } from "react-jwt";
 
-import { updatePersonalInfo } from '../features/builder/builderActions';
-import { addExperience, updateExperience, addEducation, updateEducation, addSkill } from '../features/otherInfo/otherInfoBuilderActions'
+import { updateResume } from '../features/builder/builderActions';
 
 
-const Skills = ({experienceForm, educationForm, formData, skillInput, setSkillInput, prevPage}) => {
+const Skills = ({experienceForm, educationForm, formData, skills, setSkills, prevPage}) => {
   const [submitted, setSubmitted] = useState(false);
 
-  const [skills, setSkills] = useState([])
+  const [skillInput, setSkillInput] = useState('')
+  const [allSkills, setAllSkills] = useState([])
 
-  const { isSuccessPersonalInfo } = useSelector((state) => state.builder)
+  const { isSuccess } = useSelector((state) => state.builder)
+
+
 
 
   const navigate = useNavigate()
@@ -42,17 +44,22 @@ const Skills = ({experienceForm, educationForm, formData, skillInput, setSkillIn
     setSkills(rows);
   }
 
-  useEffect(() => {
+  // useEffect(() => {
+    
+  //   skills.map((skill => {
+  //     setAllSkills(skill.title)
+  //   }))
+    
 
-  },[isSuccessPersonalInfo])
+  // },[isSuccess])
 
   const onSubmit = (e) => {
     e.preventDefault()
     
-    dispatch(updatePersonalInfo(formData))
+    dispatch(updateResume(formData))
 
     
-    if(isSuccessPersonalInfo){
+    if(isSuccess){
 
       experienceForm.map((form)=>{
         if(form.id){
@@ -70,21 +77,18 @@ const Skills = ({experienceForm, educationForm, formData, skillInput, setSkillIn
         }
       })
 
-      skills.map((skill => {
-        dispatch(addSkill(skill))
-      }))
-
-      
-
-      // experienceForm.map((form)=>{
-      //   dispatch(addExperience(form))
-      // })
-
+      // skills.map((skill => {
+      //   dispatch(addSkill(skill))
+      // }))
       
     }
 
     navigate('/resume')
   }
+  
+  
+
+  console.log('all_skills '+ allSkills)
 
 
 
@@ -116,7 +120,7 @@ const Skills = ({experienceForm, educationForm, formData, skillInput, setSkillIn
           {skills.map((skill, index) => 
             <div className='flex justify-center items-center'>
               <p className='bg-[#002D74] text-white py-1 px-3 rounded-full cursor-pointer' 
-               onClick={() => removeSkill(index)}> {skill} <i className="pi pi-times ml-1"></i> </p>
+               onClick={() => removeSkill(index)}> {skill.title} <i className="pi pi-times ml-1"></i> </p>
             </div>
           )}
        

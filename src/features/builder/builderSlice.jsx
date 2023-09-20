@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { 
-    fetchPersonalInfo, 
-    addPersonalInfo, 
-    updatePersonalInfo,  
+    fetchResume, 
+    addResume, 
+    updateResume,  
 } from './builderActions'
 
 // const departmentData = localStorage.getItem('departmentData')
@@ -15,7 +15,7 @@ import {
 // : null
 
 const initialState = {
-  personalInfoData: [],
+  resumeData: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -28,9 +28,9 @@ export const builderSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.personalInfoData = state.personalInfoData
+      state.resumeData = state.resumeData
       state.isLoading = false
-      state.isSuccessPersonalInfo = false,
+      state.isSuccess = false,
       state.isError = false
       state.message = ''
     },
@@ -38,41 +38,41 @@ export const builderSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Personal Info
-      .addCase(fetchPersonalInfo.pending, (state) => {
+      .addCase(fetchResume.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchPersonalInfo.fulfilled, (state, action) => {
+      .addCase(fetchResume.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccessPersonalInfo = true;
-        state.personalInfoData = localStorage.getItem('personalInfoData');
+        state.isSuccess = true;
+        state.resumeData = localStorage.getItem('resumeData');
       })
-      .addCase(fetchPersonalInfo.rejected, (state, action) => {
+      .addCase(fetchResume.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
 
-      .addCase(addPersonalInfo.pending, (state) => {
+      .addCase(addResume.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addPersonalInfo.fulfilled, (state, action) => {
+      .addCase(addResume.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccessPersonalInfo = true;
+        state.isSuccess = true;
       })
-      .addCase(addPersonalInfo.rejected, (state, action) => {
+      .addCase(addResume.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
       
-      .addCase(updatePersonalInfo.pending, (state) => {
+      .addCase(updateResume.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updatePersonalInfo.fulfilled, (state, action) => {
+      .addCase(updateResume.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccessPersonalInfo = true;
+        state.isSuccess = true;
       })
-      .addCase(updatePersonalInfo.rejected, (state, action) => {
+      .addCase(updateResume.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

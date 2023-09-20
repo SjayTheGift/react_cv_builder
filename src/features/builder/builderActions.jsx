@@ -33,33 +33,33 @@ else{
 
 // Personal Info CRUD 
 
-export const fetchPersonalInfo = createAsyncThunk('builder/fetchPersonalInfo', async (thunkAPI) => {
+export const fetchResume = createAsyncThunk('builder/fetchResume', async (thunkAPI) => {
 
-    return await axios.get(`${backendURL}/api/cv-builder/personal-info/`, config)
-    .then(res => {
-        localStorage.setItem('personalInfoData', JSON.stringify(res.data))
-        return res.data
-    })
-    .catch(error => {
-      console.log(error)
-      toast.error(error.message)
-    })
-  }
+  return await axios.get(`${backendURL}/api/cv-builder/resume/`, config)
+  .then(res => {
+      localStorage.setItem('resumeData', JSON.stringify(res.data))
+      return res.data
+  })
+  .catch(error => {
+    console.log(error)
+    toast.error(error.message)
+  })
+}
 )
 
-export const addPersonalInfo = createAsyncThunk('builder/addPersonalInfo', async (data, thunkAPI) => {
-    return await axios.post(`${backendURL}/api/cv-builder/personal-info/`, data, config)
-    .then(res => {
-        // localStorage.setItem('departmentData', JSON.stringify(res.data)
-        return res.data
-    })
-    .catch(error => {
-      toast.error(error.response.data.name[0])
-    })
-  }
+export const addResume = createAsyncThunk('builder/addResume', async (data, thunkAPI) => {
+  return await axios.post(`${backendURL}/api/cv-builder/resume/`, data, config)
+  .then(res => {
+      // localStorage.setItem('departmentData', JSON.stringify(res.data)
+      return res.data
+  })
+  .catch(error => {
+    toast.error(error.response.data.name[0])
+  })
+}
 )
 
-export const updatePersonalInfo = createAsyncThunk('builder/updatePersonalInfo', async (data) => {
+export const updateResume = createAsyncThunk('builder/updateResume', async (data) => {
   
     return await axios.put(`${backendURL}/api/cv-builder/personal-info/${data.id}/`,  data , config)
     .then(res => {
