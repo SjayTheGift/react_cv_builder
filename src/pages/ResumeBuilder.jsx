@@ -7,8 +7,7 @@ import Education from '../components/Education'
 import Skills from '../components/Skills'
 import { decodeToken  } from "react-jwt";
 
-import { fetchPersonalInfo } from '../features/builder/builderActions';
-import { fetchExperience, fetchEducation } from '../features/otherInfo/otherInfoBuilderActions';
+import { fetchResume } from '../features/builder/builderActions';
 import { useDispatch, useSelector } from 'react-redux'
 
 const ResumeBuilder = () => {
@@ -42,8 +41,7 @@ const ResumeBuilder = () => {
         user: '',
     })
 
-    const { personalInfoData, isSuccessPersonalInfo } = useSelector((state) => state.builder)
-    const { experienceData, educationData, isEducationSuccess, isExperienceSuccess, } = useSelector((state) => state.otherInfoBuilder)
+    const { resumeData, isSuccess } = useSelector((state) => state.builder)
   
 
     const [experienceForm, setExperienceForm] = useState([{
@@ -58,43 +56,49 @@ const ResumeBuilder = () => {
 
     const [educationForm, setEducationForm] = useState([{
         id: '',
-        title: '',
+        course: '',
         institution: '',
         duration: '',
         resume: resume_id,
     }])
 
-    const [skillInput, setSkillInput] = useState()
+    const [skills, setSkills] = useState([{
+        id: '',
+        title: '',
+    }])
 
+
+    // console.log(skillInput)
 
   
   useEffect(() =>{
-    dispatch(fetchPersonalInfo())
+    dispatch(fetchResume())
 
-    dispatch(fetchExperience())
-
-    dispatch(fetchEducation())
     
     // dispatch(fetchSkill())
+    
 
-    if(isSuccessPersonalInfo){
-        setFormData(JSON.parse(personalInfoData)[0])
+    if(isSuccess){
+        setFormData(JSON.parse(resumeData)[0])
+        setExperienceForm(JSON.parse(resumeData)[0].experiences)
+        setEducationForm(JSON.parse(resumeData)[0].educations)
+        setSkills(JSON.parse(resumeData)[0].skills)
     }
 
-    if(isExperienceSuccess && experienceData != null){
-        setExperienceForm(JSON.parse(experienceData))
-    }
+    // if(isExperienceSuccess && experienceData != null){
+    //     setExperienceForm(JSON.parse(experienceData))
+    // }
 
-    if(isEducationSuccess && educationData != null){
-        setEducationForm(JSON.parse(educationData))
-    }
+    // if(isEducationSuccess && educationData != null){
+    //     setEducationForm(JSON.parse(educationData))
+    // }
 
     // if(isSkillSuccess && skillData != null){
     //     setSkillInput(JSON.parse(skillData))
     // }
     
 
-  },[personalInfoData, experienceData, educationData, skillData, isExperienceSuccess, isEducationSuccess, isSuccessPersonalInfo])
+  },[resumeData, isSuccess])
 
 
 //   if(!experienceData){
@@ -132,7 +136,7 @@ const ResumeBuilder = () => {
                 return <Education nextPage={nextPage} prevPage={prevPage} educationForm={educationForm} setEducationForm={setEducationForm}/>;
             break;
             case 3:
-                return <Skills educationForm={educationForm} experienceForm={experienceForm} formData={formData} skillInput={skillInput} setSkillInput={setSkillInput} prevPage={prevPage}/>;
+                return <Skills educationForm={educationForm} experienceForm={experienceForm} formData={formData} skills={skills} setSkills={setSkills} prevPage={prevPage}/>;
             break;
             // case 4:
             //     return <Achievements />;
